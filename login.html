@@ -10,6 +10,30 @@
 </head>
 
 <body>
+    <!-- <p>My local data</p>
+    <p id="data"></p>
+    <br>
+    <p>My session data</p>
+    <p id="session"></p> -->
+    <select id="demo" onchange="show()">
+        <option value="Select Color">Select Color</option>
+        <option value="#E5D68A">Yellow</option>
+        <option value="#6AC47E">Green</option>
+        <option value="#51E1ED">Blue</option>
+    </select>
+
+
+    <select id="bg" onchange="showBg()">
+        <option value="Select bg">Select bg</option>
+        <option value="11.jpg">First</option>
+        <option value="home1.jpg">Second</option>
+        <option value="home2.jpg">Third</option>
+    </select>
+
+    <div id="header" style="margin-right: 2vw;">
+    </div>
+   
+
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
@@ -25,21 +49,7 @@
                         <input type="password" placeholder="Password" id="password" />
                     </div>
                     <input type="submit" value="Login" class="btn solid" onclick="LogVal()" />
-                    <!-- <p class="social-text">Or Sign in with social platforms</p> -->
-                    <!-- <div class="social-media">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div> -->
+
                 </form>
 
                 <!-- Sign Up form -->
@@ -71,21 +81,11 @@
                         <input type="password" placeholder="Confirm Password" id="password2" required />
                     </div>
                     <input type="submit" class="btn" value="Sign up" onclick="RegVal()" />
-                    <!-- <p class="social-text">Or Sign up with social platforms</p>
-                    <div class="social-media">
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="#" class="social-icon">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div> -->
+
+                    <input type="submit" value="Set Cookie" onclick="setCookie()"> <br>
+                    <input type="submit" value="Get Cookie" onclick="getCookie()"> <br>
+                    <input type="submit" value="Remove Cookie" onclick="removeCookie()">
+
                 </form>
             </div>
         </div>
@@ -133,12 +133,38 @@
             container.classList.remove("sign-up-mode");
         });
 
+         //Local storage
+         var person = { "name": "Rohit", "age": 20 };
+        var person2 = { "name": "Reuben", "age": 22 };
+        localStorage.setItem('person', JSON.stringify(person));
+        localStorage.setItem('person2', JSON.stringify(person2));
+
+        var retrievedPerson = JSON.parse(localStorage.getItem('person'));
+        var retrievedPerson2 = JSON.parse(localStorage.getItem('person2'));
+
+        document.getElementById("data").innerHTML = localStorage.getItem('person')
+        console.log(localStorage.getItem('person2'));
+
+        //Session
+        var employee = { "name": "John", "place": "Bangalore" };
+        var employee2 = { "name": "Johnny", "place": "Bangkok" };
+        sessionStorage.setItem('employee', JSON.stringify(employee));
+        sessionStorage.setItem('employee2', JSON.stringify(employee2));
+
+        var retrievedemployee = JSON.parse(sessionStorage.getItem('employee'));
+        var retrievedemployee2 = JSON.parse(sessionStorage.getItem('employee2'));
+
+        document.getElementById('session').innerHTML = sessionStorage.getItem('employee')
+        console.log(sessionStorage.getItem('employee2'))
+
+
+        //login credentials are being validated
         function LogVal() {
             var mail = document.getElementById('mail')
             var pword = document.getElementById('password')
 
             if (
-               
+
                 !mail.value ||
                 !password.value
             ) {
@@ -164,9 +190,9 @@
 
         }
 
-
-
+        //registration credentials are being validated here
         function RegVal() {
+
             var name = document.getElementById('name')
             var email = document.getElementById('email')
             var phone = document.getElementById('phone')
@@ -201,7 +227,7 @@
                 return
             }
 
-            var phnumber = /[0-9]{10,10}/
+            var phnumber = /[0-9]{10}/
             if (!phnumber.test(phone.value)) {
                 alert("Phone Number can only consist of 10 digits")
                 return
@@ -218,9 +244,99 @@
                 return
             }
 
+
             alert("Registered")
 
         }
+
+        function setCookie() {
+
+            var name = document.getElementById('name').value
+            var email = document.getElementById('email').value
+            var phone = document.getElementById('phone').value
+            console.log(name)
+            document.cookie = "Name =" + name
+            document.cookie = "Email =" + email
+            document.cookie = "Phone =" + phone
+        }
+
+        function getCookie() {
+            if (document.cookie.length != 0) {
+
+
+                var allcookies = document.cookie;
+                document.write("All Cookies : " + allcookies);
+
+                // Get all the cookies pairs in an array
+                cookiearray = allcookies.split(';');
+
+                // Now take key value pair out of this array
+                for (var i = 0; i < cookiearray.length; i++) {
+                    name = cookiearray[i].split('=')[0];
+                    value = cookiearray[i].split('=')[1];
+                    document.write("Key is : " + name + " and Value is : " + value);
+
+                }
+            }
+            else {
+                alert("No cookies")
+            }
+        }
+
+
+        function removeCookie() {
+            document.cookie = "Name =; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
+            document.cookie = "Email =; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
+            document.cookie = "Phone =; expires=Thu, 01 Jan 2022 00:00:00 UTC; path=/;";
+
+        }
+
+        function show() {
+            var value = document.getElementById("demo").value;
+            if (value != "Select Color") {
+                document.bgColor = value;
+                document.cookie = "color=" + value + ";expires=Fri,2 Feb 2022 01:00:00 UTC;";
+            }
+        }
+        window.onload = function () {
+            if (document.cookie.length != 0) {
+                var a = document.cookie.split("=");
+                document.getElementById("demo").value = a[1];
+                document.bgColor = a[1];
+            }
+        }
+        
+        function showBg() {
+            var value = document.getElementById("bg").value;
+            // console.log(value)
+            if (value != "Select Image") {
+                document.bgImg = value;
+                document.cookie = "img src=" + value + ";expires=Fri,27 Jan 2022 01:57:00 UTC;";
+            }
+        }
+        // window.onclick = function () {
+        //     var value = document.getElementById("bg").value;
+        //     console.log(value)
+
+        //     if (document.cookie.length != 0) {
+                
+        
+        //         var a = document.cookie.split("=");
+        //         document.getElementById("bg").value = a[1];
+        //         // document.bgImg=a[1];
+        //         // document.body.style.backgroundImage = "URL('https://picsum.photos/seed/picsum/200/300')"
+        //         var img = document.createElement("img");
+        //         // console.log(a[1])
+        //         img.src = value;
+        //         img.style="width:400px;height:200px;"
+        //         var src = document.getElementById("header");
+        //         src.appendChild(img);
+
+
+        //     }
+        
+
+
     </script>
 
 </body>
