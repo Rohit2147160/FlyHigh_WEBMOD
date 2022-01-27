@@ -10,11 +10,11 @@
 </head>
 
 <body>
-    <!-- <p>My local data</p>
+    <p>My local data</p>
     <p id="data"></p>
     <br>
     <p>My session data</p>
-    <p id="session"></p> -->
+    <p id="session"></p>
     <select id="demo" onchange="show()">
         <option value="Select Color">Select Color</option>
         <option value="#E5D68A">Yellow</option>
@@ -147,7 +147,7 @@
 
         //Session
         var employee = { "name": "John", "place": "Bangalore" };
-        var employee2 = { "name": "Johnny", "place": "Bangkok" };
+       var employee2 = { "name": "Johnny", "place": "Bangkok" };
         sessionStorage.setItem('employee', JSON.stringify(employee));
         sessionStorage.setItem('employee2', JSON.stringify(employee2));
 
@@ -155,7 +155,7 @@
         var retrievedemployee2 = JSON.parse(sessionStorage.getItem('employee2'));
 
         document.getElementById('session').innerHTML = sessionStorage.getItem('employee')
-        console.log(sessionStorage.getItem('employee2'))
+        console.log(sessionStorage.getItem('employee'))
 
 
         //login credentials are being validated
